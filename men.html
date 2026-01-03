@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ankara Essence | Men’s Wear</title>
+
+<style>
+:root {
+  --accent: #d4a373;
+  --border: rgba(255,255,255,0.15);
+  --muted: #bdbdbd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  color: #fff;
+}
+
+/* CART ICON */
+.cart-icon {
+  position: fixed;
+  top: 25px;
+  right: 30px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: var(--accent);
+  color: #000;
+  font-size: 0.7rem;
+  padding: 3px 7px;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+/* SECTION */
+.mens-section {
+  max-width: 1400px;
+  margin: auto;
+  padding: 5rem 3rem;
+}
+
+.section-head {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-head h2 {
+  font-size: 2.6rem;
+}
+
+.section-head p {
+  color: var(--muted);
+}
+
+/* GRID */
+.mens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* CARD */
+.mens-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.mens-image {
+  height: 300px;
+}
+
+.mens-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mens-info {
+  padding: 1.2rem;
+}
+
+.mens-info h3 {
+  font-size: 1rem;
+}
+
+.price {
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0.4rem 0;
+}
+
+/* BUTTONS */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.actions button {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.add-cart {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.order-now {
+  background: var(--accent);
+  color: #000;
+}
+
+/* CART PANEL */
+.cart-panel {
+  position: fixed;
+  right: -100%;
+  top: 0;
+  height: 100%;
+  width: 350px;
+  background: #111;
+  padding: 1.5rem;
+  transition: right 0.4s ease;
+  z-index: 999;
+}
+
+.cart-panel.active {
+  right: 0;
+}
+
+.cart-panel h3 {
+  margin-bottom: 1rem;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+  font-size: 0.85rem;
+}
+
+.cart-item button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+}
+
+.cart-total {
+  margin-top: 1rem;
+  font-weight: 700;
+}
+
+.checkout {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--accent);
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* HEADER */
+.site-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: auto;
+  padding: 1.2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* LOGO */
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+/* NAV */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* CART */
+.header-cart {
+  position: relative;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+.header-cart .cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: var(--accent);
+  color: #000;
+  font-size: 0.7rem;
+  padding: 3px 7px;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+/* FOOTER */
+.site-footer {
+  background: #0b0b0b;
+  color: #fff;
+  padding: 4rem 3rem 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.footer-brand h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.footer-brand h3 span {
+  color: var(--accent);
+}
+
+.footer-brand p {
+  color: var(--muted);
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.footer-links, .footer-contact {
+  min-width: 180px;
+}
+
+.footer-links h4, .footer-contact h4 {
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.footer-links a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-contact p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--muted);
+}
+
+.footer-socials a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  margin-right: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.footer-socials a:hover {
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-links, .footer-contact {
+    min-width: unset;
+  }
+
+  .footer-socials a {
+    margin-right: 0.5rem;
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <div >Ankara Essence <span>Men</span></div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="nav-links">
+      <a href="./home.html">Home</a>
+      <a href="./men.html">Men</a>
+      <a href="./women.html">Women</a>
+      <a href="./children.html">Children</a>
+      <a href="./fab.html" style="color: var(--accent);">Fabrics & Accessories</a>
+      <a href="./collections.html">Collections</a>
+      <a href="./contact.html">Contact</a>
+    </nav>
+
+    
+
+  </div>
+</header>
+
+    
+
+<!-- CART ICON -->
+<div class="cart-icon" onclick="toggleCart()">
+ 🛒 <span class="cart-count">0</span>
+</div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <div class="cart-total" id="cartTotal">Total: ₦0</div>
+  <button class="checkout" onclick="placeOrder()">Place Order</button>
+</div>
+
+<section class="mens-section">
+  <div class="section-head">
+    <h2>Men’s Ankara Collection</h2>
+    <p>Bold African patterns. Tailored for the modern man.</p>
+  </div>
+
+  <div class="mens-grid">
+
+    <!-- PRODUCT 1 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/men senator wear.jpg"></div>
+      <div class="mens-info">
+        <h3>Senator Ankara Set</h3>
+        <div class="price">₦45,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Senator Ankara Set',45000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Senator Ankara Set',45000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 2 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/men wear 2.webp"></div>
+      <div class="mens-info">
+        <h3>Modern Two-Piece</h3>
+        <div class="price">₦38,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Modern Two-Piece',38000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Modern Two-Piece',38000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 3 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/men anakara shirt.jpg"></div>
+      <div class="mens-info">
+        <h3>Ankara Shirt</h3>
+        <div class="price">₦25,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Ankara Shirt',25000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Ankara Shirt',25000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 4 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/men luxury agbada.jpg"></div>
+      <div class="mens-info">
+        <h3>Luxury Agbada</h3>
+        <div class="price">₦120,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Luxury Agbada',120000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Luxury Agbada',120000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 5 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/MEN KAFTAN.jpg"></div>
+      <div class="mens-info">
+        <h3>Kaftan Set</h3>
+        <div class="price">₦42,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Kaftan Set',42000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Kaftan Set',42000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 6 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/me short skeeve.jpg"></div>
+      <div class="mens-info">
+        <h3>Short Sleeve Native</h3>
+        <div class="price">₦30,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Short Sleeve Native',30000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Short Sleeve Native',30000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 7 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/men jacket.jpg"></div>
+      <div class="mens-info">
+        <h3>Ankara Jacket</h3>
+        <div class="price">₦55,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Ankara Jacket',55000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Ankara Jacket',55000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 8 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/men wear 8.webp"></div>
+      <div class="mens-info">
+        <h3>Traditional Wear</h3>
+        <div class="price">₦48,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Traditional Wear',48000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Traditional Wear',48000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 9 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/men polo.jpg"></div>
+      <div class="mens-info">
+        <h3>Ankara Polo</h3>
+        <div class="price">₦22,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Ankara Polo',22000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Ankara Polo',22000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT 10 -->
+    <div class="mens-card">
+      <div class="mens-image"><img src="./image/men wear 10.jpg"></div>
+      <div class="mens-info">
+        <h3>Classic Native Set</h3>
+        <div class="price">₦50,000</div>
+        <div class="actions">
+          <button class="add-cart" onclick="addToCart('Classic Native Set',50000)">Add to Cart</button>
+          <button class="order-now" onclick="orderSingle('Classic Native Set',50000)">Order</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+let cart = [];
+
+function toggleCart() {
+  document.getElementById("cartPanel").classList.toggle("active");
+}
+
+function addToCart(name, price) {
+  cart.push({ name, price });
+  updateCart();
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+function updateCart() {
+  const cartItems = document.getElementById("cartItems");
+  const cartCount = document.querySelector(".cart-count");
+  const cartTotal = document.getElementById("cartTotal");
+
+  cartItems.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price;
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        <span>${item.name}</span>
+        <button onclick="removeItem(${index})">✕</button>
+      </div>
+    `;
+  });
+
+  cartCount.textContent = cart.length;
+  cartTotal.textContent = `Total: ₦${total}`;
+}
+
+function placeOrder() {
+  if (!cart.length) return alert("Cart is empty");
+
+  let message = "Hello, I want to order:%0A";
+  cart.forEach(item => {
+    message += `- ${item.name} (₦${item.price})%0A`;
+  });
+
+  window.open(`https://wa.me/2348134579317?text=${message}`, "_blank");
+}
+
+function orderSingle(name, price) {
+  const message = `Hello, I want to order ${name} (₦${price})`;
+  window.open(`https://wa.me/2348134579317?text=${message}`, "_blank");
+}
+</script>
+
+<footer class="site-footer">
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div class="footer-brand">
+      <h3>Ankara Essence <span>Men</span></h3>
+      <p>Bold African fashion tailored for the modern man & woman.</p>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <a href="./index.html">Home</a>
+      <a href="./men.html">Men</a>
+      <a href="./women.html">Women</a>
+      <a href="./children.html">Children</a>
+      <a href="./fab.html" style="color: var(--accent);">Fabrics & Accessories</a>
+      <a href="./collections.html">Collections</a>
+      <a href="./contact.html">Contact</a>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <p>Email: info@ankaraessence.com</p>
+      <p>Phone: +2348100828016</p>
+      <div class="footer-socials">
+        <a href="#" title="Instagram">📷</a>
+        <a href="#" title="Facebook">📘</a>
+        <a href="#" title="WhatsApp">💬</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    &copy; 2025 Ankara Essence. All Rights Reserved.
+  </div>
+</footer>
+
+
+</body>
+</html>

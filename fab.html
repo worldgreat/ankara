@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankara Essence | Fabrics & Accessories</title>
+    <style>
+        /* ================= ROOT VARIABLES ================= */
+        :root {
+          --accent:#d4a373;
+          --border:rgba(255,255,255,0.15);
+          --muted:#bdbdbd;
+        }
+
+        /* ================= GLOBAL ================= */
+        * {
+          margin:0;
+          padding:0;
+          box-sizing:border-box;
+          font-family:Inter,system-ui,sans-serif;
+        }
+
+        body {
+          background:radial-gradient(circle at top,#1a1a1a,#000);
+          color:#fff;
+        }
+
+        /* ================= HEADER ================= */
+        header {
+          position:sticky;
+          top:0;
+          z-index:1000;
+          backdrop-filter:blur(14px);
+          background:rgba(0,0,0,0.75);
+          border-bottom:1px solid var(--border);
+        }
+
+        .header-inner {
+          max-width:1400px;
+          margin:auto;
+          padding:1.2rem 3rem;
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+        }
+
+        .logo {
+          font-size:1.5rem;
+          font-weight:700;
+        }
+        .logo span { color:var(--accent); }
+
+        nav a {
+          margin-left:1.5rem;
+          color:#fff;
+          text-decoration:none;
+          font-size:.95rem;
+        }
+
+        /* ================= SECTION ================= */
+        section {
+          max-width:1400px;
+          margin:auto;
+          padding:5.5rem 3rem;
+        }
+
+        .section-head {
+          text-align:center;
+          margin-bottom:4rem;
+        }
+
+        .section-head h2 {
+          font-size:clamp(2.3rem,4vw,3rem);
+        }
+
+        .section-head p {
+          margin-top:.7rem;
+          color:var(--muted);
+        }
+
+        /* ================= 20-ITEM GRID ================= */
+        .fabrics-grid {
+          display:grid;
+          grid-template-columns:repeat(4,1fr);
+          gap:1.8rem;
+        }
+
+        /* ================= CARD ================= */
+        .fabrics-card {
+          background:rgba(255,255,255,0.06);
+          backdrop-filter:blur(16px);
+          border:1px solid var(--border);
+          border-radius:18px;
+          overflow:hidden;
+          transition:.4s;
+          display:flex;
+          flex-direction:column;
+        }
+
+        .fabrics-card:hover {
+          transform:translateY(-8px);
+          box-shadow:0 30px 60px rgba(0,0,0,.5);
+        }
+
+        .fabrics-img {
+          width:100%;
+          height:260px;
+          object-fit:cover;
+          transition:.6s;
+        }
+
+        .fabrics-card:hover .fabrics-img {
+          transform:scale(1.08);
+        }
+
+        .fabrics-info {
+          padding:1.2rem;
+          flex-grow:1;
+          display:flex;
+          flex-direction:column;
+        }
+
+        .fabrics-info h3 {
+          font-size:1rem;
+          font-weight:500;
+          line-height:1.4;
+        }
+
+        .fabrics-info .category {
+          font-size:.85rem;
+          color:var(--muted);
+          margin:.3rem 0 .5rem;
+          text-transform:uppercase;
+          letter-spacing:.5px;
+        }
+
+        .fabrics-info span {
+          display:block;
+          color:var(--accent);
+          font-weight:700;
+          margin:.5rem 0 .8rem;
+          font-size:1.1rem;
+        }
+
+        .fabrics-desc {
+          font-size:.85rem;
+          color:#ccc;
+          line-height:1.5;
+          margin-bottom:1rem;
+          flex-grow:1;
+        }
+
+        /* ================= BUTTONS ================= */
+        .fabrics-actions {
+          display:flex;
+          gap:.5rem;
+          margin-top:auto;
+        }
+
+        .fabrics-actions button {
+          flex:1;
+          padding:.5rem;
+          border-radius:14px;
+          cursor:pointer;
+          font-weight:600;
+          border:none;
+          font-size:.85rem;
+        }
+
+        .fabrics-cart {
+          background:transparent;
+          border:1px solid var(--accent);
+          color:var(--accent);
+        }
+
+        .fabrics-cart:hover {
+          background:var(--accent);
+          color:#000;
+        }
+
+        .fabrics-order {
+          background:var(--accent);
+          color:#000;
+        }
+
+        /* ================= CART ================= */
+        .cart-icon {
+          position: fixed;
+          top: 25px;
+          right: 30px;
+          cursor: pointer;
+          z-index: 1000;
+          font-size: 1.3rem;
+        }
+
+        .cart-count {
+          position: absolute;
+          top: -8px;
+          right: -10px;
+          background: var(--accent);
+          color: #000;
+          font-size: 0.7rem;
+          padding: 3px 7px;
+          border-radius: 50%;
+          font-weight: 700;
+        }
+
+        .cart-panel {
+          position: fixed;
+          right: -100%;
+          top: 0;
+          height: 100%;
+          width: 350px;
+          background: #111;
+          padding: 1.5rem;
+          transition: right 0.4s ease;
+          z-index: 999;
+        }
+
+        .cart-panel.active {
+          right: 0;
+        }
+
+        .cart-panel h3 {
+          margin-bottom: 1rem;
+        }
+
+        .cart-item {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.7rem;
+          font-size: 0.85rem;
+        }
+
+        .cart-item button {
+          background: none;
+          border: none;
+          color: red;
+          cursor: pointer;
+        }
+
+        .cart-total {
+          margin-top: 1rem;
+          font-weight: 700;
+        }
+
+        .checkout {
+          margin-top: 1rem;
+          width: 100%;
+          padding: 0.7rem;
+          background: var(--accent);
+          border: none;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+          background:#0b0b0b;
+          border-top:1px solid var(--border);
+          text-align:center;
+          padding:2.5rem;
+          color:var(--muted);
+        }
+
+        .footer-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: 2rem;
+          max-width: 1400px;
+          margin: auto;
+        }
+
+        .footer-brand {
+          min-width: 250px;
+        }
+
+        .footer-brand h3 {
+          font-size: 1.6rem;
+          font-weight: 700;
+        }
+
+        .footer-brand h3 span {
+          color: var(--accent);
+        }
+
+        .footer-brand p {
+          color: var(--muted);
+          margin-top: 0.6rem;
+          font-size: 0.95rem;
+        }
+
+        .footer-links, .footer-contact {
+          min-width: 180px;
+        }
+
+        .footer-links h4, .footer-contact h4 {
+          margin-bottom: 0.8rem;
+          font-size: 1rem;
+        }
+
+        .footer-links a {
+          display: block;
+          text-decoration: none;
+          color: #fff;
+          margin-bottom: 0.4rem;
+          font-size: 0.95rem;
+          transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+          color: var(--accent);
+        }
+
+        .footer-contact p {
+          font-size: 0.9rem;
+          margin-bottom: 0.5rem;
+          color: var(--muted);
+        }
+
+        .footer-socials a {
+          text-decoration: none;
+          font-size: 1.2rem;
+          margin-right: 0.8rem;
+          transition: transform 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+          transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+          text-align: center;
+          margin-top: 2rem;
+          font-size: 0.85rem;
+          color: var(--muted);
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media(max-width:1200px) {
+          .fabrics-grid { grid-template-columns:repeat(3,1fr); }
+        }
+        @media(max-width:900px) {
+          .fabrics-grid { grid-template-columns:repeat(2,1fr); }
+        }
+        @media(max-width:600px) {
+          .fabrics-grid { grid-template-columns:1fr; }
+          section { padding:3rem 1.5rem; }
+          .header-inner { flex-direction: column; gap: 1rem; text-align:center; padding:1rem; }
+          nav { justify-content:center; flex-wrap:wrap; }
+          nav a { margin:0.3rem 0.7rem; font-size:0.85rem; }
+          .cart-icon { top:15px; right:15px; font-size:1.1rem; }
+          .cart-panel { width:100%; }
+          .fabrics-img { height:220px; }
+          .fabrics-info h3 { font-size:0.95rem; }
+          .fabrics-desc { font-size:0.8rem; }
+          .fabrics-actions button { font-size:0.8rem; padding:0.6rem; }
+          footer { padding:2rem 1rem; }
+          .footer-container { flex-direction: column; text-align:center; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">Ankara Essence <span>Fabrics</span></div>
+        <nav>
+            <a href="./index.html">Home</a>
+            <a href="./men.html">Men</a>
+            <a href="./women.html">Women</a>
+            <a href="./children.html">Children</a>
+            <a href="./fab.html" style="color: var(--accent);">Fabrics & Accessories</a>
+            <a href="./collections.html">Collections</a>
+            <a href="./contact.html">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- CART ICON -->
+<div class="cart-icon" onclick="toggleCart()">
+    🛒 <span class="cart-count">0</span>
+</div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Total: ₦0</div>
+    <button class="checkout" onclick="placeOrder()">Place Order</button>
+</div>
+
+<!-- ================= FABRICS & ACCESSORIES SECTION ================= -->
+<section>
+    <div class="section-head">
+        <h2>Fabrics & Accessories</h2>
+        <p>Premium Ankara fabrics, beads, and finishing materials for your creations</p>
+    </div>
+
+    <div class="fabrics-grid">
+        <!-- Product 1-20 -->
+        <div class="fabrics-card">
+            <img src="./image/fab 1.jpg" alt="Premium Ankara Fabric" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Premium Ankara Fabric (6 yards)</h3>
+                <div class="category">FABRIC</div>
+                <span>₦15,000</span>
+                <p class="fabrics-desc">High-quality 100% cotton Ankara with vibrant colors and traditional patterns.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Premium Ankara Fabric (6 yards)',15000)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Premium Ankara Fabric (6 yards)',15000)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 2.jpg" alt="African Print Fabric" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>African Yellow Print Fabric Bundle</h3>
+                <div class="category">FABRIC PACK</div>
+                <span>₦45,000</span>
+                <p class="fabrics-desc">Set of 3 different Ankara prints, 6 yards each. Perfect for variety.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('African Print Fabric Bundle',45000)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('African Print Fabric Bundle',45000)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 3.jpg" alt="Colorful Beads" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Red Colorful Collection</h3>
+                <div class="category">RED</div>
+                <span>₦8,500</span>
+                <p class="fabrics-desc">Red Fabric</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Colorful Bead Collection',8500)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Colorful Bead Collection',8500)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 4.jpg" alt="Leather Accessories" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Blue Traditional Fabric</h3>
+                <div class="category">BLUE</div>
+                <span>₦22,000</span>
+                <p class="fabrics-desc">Blue traditional attire.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Traditional Leather Accessories',22000)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Traditional Leather Accessories',22000)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 5.jpg" alt="Gold Thread" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Green fabric Set</h3>
+                <div class="category">THREAD</div>
+                <span>₦6,500</span>
+                <p class="fabrics-desc">Premium green for traditional fabric.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Gold Embroidery Thread Set',6500)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Gold Embroidery Thread Set',6500)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 6.jpg" alt="Cowrie Shells" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Authentic Cowrie Shells Pack</h3>
+                <div class="category">SHELLS</div>
+                <span>₦12,000</span>
+                <p class="fabrics-desc">Natural cowrie shells for traditional jewelry and garment decoration.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Authentic Cowrie Shells Pack',12000)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Authentic Cowrie Shells Pack',12000)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 7.jpg" alt="African Buttons" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Handcarved Wooden Buttons</h3>
+                <div class="category">BUTTONS</div>
+                <span>₦4,500</span>
+                <p class="fabrics-desc">Set of 12 traditional African patterned wooden buttons.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Handcarved Wooden Buttons',4500)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Handcarved Wooden Buttons',4500)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 8.jpg" alt="Kente Strips" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Kente Cloth Strips</h3>
+                <div class="category">TRIMMINGS</div>
+                <span>₦9,800</span>
+                <p class="fabrics-desc">Authentic Kente cloth strips for borders and decorative trimmings.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Kente Cloth Strips',9800)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Kente Cloth Strips',9800)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 9.jpg" alt="Lace Fabric" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>African Lace Fabric (3 yards)</h3>
+                <div class="category">LACE</div>
+                <span>₦18,500</span>
+                <p class="fabrics-desc">Premium quality lace fabric with traditional African motifs.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('African Lace Fabric (3 yards)',18500)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('African Lace Fabric (3 yards)',18500)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/fab 10.jpg" alt="Beaded Necklace Kit" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>hiiii</h3>
+                <div class="category">DIY KIT</div>
+                <span>₦14,500</span>
+                <p class="fabrics-desc">Complete kit with beads, threads, and tools for traditional necklaces.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Beaded Necklace Making Kit',14500)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Beaded Necklace Making Kit',14500)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 1.jpg" alt="Batik Dye Set" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Red Bag</h3>
+                <div class="category">DYE</div>
+                <span>₦21,000</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Traditional Batik Dye Set',21000)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Traditional Batik Dye Set',21000)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 2.jpg" alt="Raffia Material" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Bag</h3>
+                <div class="category">NATURAL FIBER</div>
+                <span>₦7,200</span>
+                <p class="fabrics-desc">Eco-friendly raffia for traditional weaving and crafts.</p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Natural Raffia Material Roll',7200)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Natural Raffia Material Roll',7200)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 3.jpg" alt="Metal Charms" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3></h3>
+                <div class="category"></div>
+                <span>₦5,800</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('African Symbol Metal Charms',5800)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('African Symbol Metal Charms',5800)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 4.jpg" alt="Feathers Pack" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Earings</h3>
+                <div class="category">FEATHERS</div>
+                <span>₦3,500</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Colorful Feather Pack',3500)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Colorful Feather Pack',3500)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 5.jpg" alt="Adire Fabric" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Earings</h3>
+                <div class="category">SPECIAL</div>
+                <span>₦25,000</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Authentic Adire Fabric (4 yards)',25000)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Authentic Adire Fabric (4 yards)',25000)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 6.jpg" alt="Bead Loom" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Hat</h3>
+                <div class="category"></div>
+                <span>₦32,000</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Traditional Bead Loom',32000)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Traditional Bead Loom',32000)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 7.jpg" alt="Velvet Fabric" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Hat</h3>
+                <div class="category">SPECIAL</div>
+                <span>₦28,500</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('African Print Velvet (3 yards)',28500)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('African Print Velvet (3 yards)',28500)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 8.jpg" alt="Tassels Pack" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Bag</h3>
+                <div class="category"></div>
+                <span>₦6,800</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Decorative Tassels Pack',6800)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Decorative Tassels Pack',6800)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 9.jpg" alt="Beaded Sandals Kit" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Sandals</h3>
+                <div class="category">FOOTWEAR</div>
+                <span>₦19,500</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Beaded Sandals DIY Kit',19500)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Beaded Sandals DIY Kit',19500)">Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="fabrics-card">
+            <img src="./image/ass 10.jpg" alt="Fabric Starter Pack" class="fabrics-img">
+            <div class="fabrics-info">
+                <h3>Slippers</h3>
+                <div class="category">FOOTWEAR</div>
+                <span>₦65,000</span>
+                <p class="fabrics-desc"></p>
+                <div class="fabrics-actions">
+                    <button class="fabrics-cart" onclick="addToCart('Complete Fabric Starter Pack',65000)">Add to Cart</button>
+                    <button class="fabrics-order" onclick="orderSingle('Complete Fabric Starter Pack',65000)">Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h3>Ankara Essence <span>Fabrics</span></h3>
+            <p>Premium materials for authentic African fashion creation.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Explore</h4>
+            <a href="./index.html">Home</a>
+            <a href="./men.html">Men</a>
+            <a href="./women.html">Women</a>
+            <a href="./children.html">Children</a>
+            <a href="./fab.html" style="color: var(--accent);">Fabrics & Accessories</a>
+            <a href="./collections.html">Collections</a>
+            <a href="./contact.html">Contact</a>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p>Email: fabrics@ankaraessence.com</p>
+            <p>Phone: +2348100828016</p>
+            <p>For bulk orders: wholesale@ankaraessence.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2025 Ankara Essence Fabrics. All Rights Reserved.
+    </div>
+</footer>
+
+<script>
+    let cart = [];
+
+    function toggleCart() {
+      document.getElementById("cartPanel").classList.toggle("active");
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCart();
+      // Show quick feedback
+      const btn = event.target;
+      const originalText = btn.textContent;
+      btn.textContent = 'Added!';
+      btn.style.background = '#4CAF50';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 1000);
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cartItems");
+      const cartCount = document.querySelector(".cart-count");
+      const cartTotal = document.getElementById("cartTotal");
+
+      cartItems.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <span>${item.name}</span>
+            <span>₦${item.price.toLocaleString()}</span>
+            <button onclick="removeItem(${index})">✕</button>
+          </div>
+        `;
+      });
+
+      cartCount.textContent = cart.length;
+      cartTotal.textContent = `Total: ₦${total.toLocaleString()}`;
+    }
+
+    function placeOrder() {
+      if (!cart.length) return alert("Cart is empty");
+
+      let message = "Hello, I want to order Fabrics & Accessories:%0A%0A";
+      cart.forEach(item => {
+        message += `• ${item.name} - ₦${item.price.toLocaleString()}%0A`;
+      });
+      
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      message += `%0ATotal: ₦${total.toLocaleString()}%0A%0A`;
+      message += "Please confirm availability and delivery options.";
+
+      window.open(`https://wa.me/2348134579317?text=${encodeURIComponent(message)}`, "_blank");
+    }
+
+    function orderSingle(name, price) {
+      const message = `Hello, I want to order: %0A%0A${name} - ₦${price.toLocaleString()}%0A%0AFrom Fabrics & Accessories collection. Please confirm availability.`;
+      window.open(`https://wa.me/2348134579317?text=${encodeURIComponent(message)}`, "_blank");
+    }
+</script>
+</body>
+</html>
